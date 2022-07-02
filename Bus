@@ -1,0 +1,227 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<math.h>
+
+int ticketno=1,i,taxeco=150,taxbusi=100,seatcnt=1;
+
+struct bus
+{
+    char passname[50], from[50], dest[50], class[20], meal[20];
+    float ticketot, tax;
+    int age, seatno, tickno;
+    char date[8];
+    char t[8];
+} fl101[100], fl102[100];
+
+int main()
+{
+    printf("\n---------------------BUS RESERVATION SYSTEM---------------------\n");
+    int choice, Busno, tickch, temptno1, temptno2, itr, ctr, mealch, tickcnt;
+    char tempname1[50],tempname2[50];
+    while(1)
+    {
+    printf("\n1.BUS01 2.BUS02\nEnter Bus's number (or enter 3 to exit): ");
+    scanf("%d",&Busno);
+    if(Busno==1)
+    {
+Bus1:printf("\n1.Reserve Ticket\n2.Display Bus Summary\n3.Cancel Ticket\n4.Exit\nEnter your choice: ");
+    scanf("%d",&choice);
+    switch(choice)
+    {
+    case 1:printf("---------RESERVE TICKETS---------\nEnter number of tickets: ");
+          scanf("%d",&tickcnt);
+          for(itr=0;itr<tickcnt;itr++)
+          {
+              printf("Enter passenger's name: ");
+              scanf("%s",fl101[itr].passname);
+              printf("Enter passenger's age: ");
+              scanf("%d",&fl101[itr].age);
+              printf("Bus from: ");
+              scanf("%s",fl101[itr].from);
+              printf("To: ");
+              scanf("%s",fl101[itr].dest);
+              printf("Enter date: ");
+              scanf("%s",fl101[itr].date);
+              printf("Enter t: ");
+              scanf("%s",fl101[itr].t);
+ticketchoice: printf("Enter ticket class: 1.Sleeper (Rs.1500) 2.Seater (Rs.1000): ");
+              scanf("%d",&tickch);
+              if(tickch==1)
+              {
+                 fl101[itr].ticketot=1650;
+                 fl101[itr].tax=150;
+                 strcpy(fl101[itr].class,"Sleeper");
+              }
+              else if(tickch==2)
+              {
+                 fl101[itr].ticketot=1100;
+                 fl101[itr].tax=100;
+                 strcpy(fl101[itr].class,"Seater");
+              }
+              else
+              {
+                   printf("\nEnter a vaild option.\n");
+                   goto ticketchoice;
+              }
+mealchoice:   printf("\nDo you want a meal? 1.Veg Meal (Rs.100) 2.Non-Veg Meal(Rs.150) 3.Kids meal(Rs.50) 4.No meal\n");
+              scanf("%d",&mealch);
+              if(mealch==1)
+              {
+                 fl101[itr].ticketot+=100;
+                 strcpy(fl101[itr].meal,"Veg meal");
+              }
+              else if(mealch==2)
+              {
+                 fl101[itr].ticketot+=150;
+                 strcpy(fl101[itr].meal,"Non-Veg meal");
+              }
+              else if(mealch==3)
+              {
+                 fl101[itr].ticketot+=50;
+                 strcpy(fl101[itr].meal,"Kids meal");
+              }
+              else if(mealch==4)
+                 strcpy(fl101[itr].meal,"No meal");
+              else
+              {
+                   printf("\nEnter a vaild option.\n");
+                   goto mealchoice;
+              }
+              fl101[itr].seatno = seatcnt;
+              fl101[itr].tickno = ticketno;
+              seatcnt++;
+              ticketno++;
+              printf("\nTicket booked successfully\n");
+          }
+          printf("\nTax pricing will be charged automatically based on your ticket's class\n");
+          goto Bus1;
+          break;
+   case 2:printf("\n----------------BUS SUMMARY----------------\nEnter ticket number: ");
+          scanf("%d",&temptno1);
+          for(ctr=0;(temptno1!=fl101[ctr].tickno)&&(ctr<ticketno);ctr++);
+          printf("\n-------------TICKET DETAILS--------------\nBUS: BUS01\nPASSENGER NAME: %s\t\tTICKET NUMBER:%d\t\tTICKET CLASS:%s\t\t\n",fl101[ctr].passname,fl101[ctr].tickno,fl101[ctr].class);
+          printf("BUS FROM: %s\t\t\tDESTINATION: %s\t\tON %s\t\tAT %s\t\n",fl101[ctr].from,fl101[ctr].dest,fl101[ctr].date,fl101[ctr].t);
+          printf("MEAL SELECTED: %s\t\tTax Charges: %.2f\n",fl101[ctr].meal,fl101[ctr].tax);
+          printf("TOTAL TICKET COST: %.2f\nHave an amazing journey\n",fl101[ctr].ticketot);
+          goto Bus1;
+          break;
+   case 3:printf("\n----------------TICKET CANCELLATION-----------------\nEnter ticket number: ");
+          scanf("%d",&temptno1);
+          for(ctr=0;(temptno1!=fl101[ctr].tickno)&&(ctr<ticketno);ctr++);
+          printf("\nTicket cancelled successfully. Rs.%.2f refunded.\n", fl101[ctr].ticketot);
+          for(i=ctr;i<(ticketno-1);i++)
+              fl101[ctr]=fl101[ctr+1];
+          ticketno--;
+          goto Bus1;
+          break;
+   case 4:break;
+   default:printf("\nEnter a valid option");
+           goto Bus1;
+       }
+    }
+    else if(Busno==2)
+    {
+Bus2:printf("1.Reserve Ticket\n2.Display Bus Summary\n3.Cancel Ticket\n4.Exit\nEnter your choice: ");
+    scanf("%d",&choice);
+    switch(choice)
+    {
+    case 1:printf("---------RESERVE TICKETS---------\nEnter number of tickets: ");
+          scanf("%d",&tickcnt);
+          for(itr=0;itr<tickcnt;itr++)
+          {
+              printf("Enter passenger's name: ");
+              scanf("%s",fl102[itr].passname);
+              printf("Enter passenger's age: ");
+              scanf("%d",&fl102[itr].age);
+              printf("Bus from: ");
+              scanf("%s",fl102[itr].from);
+              printf("To: ");
+              scanf("%s",fl102[itr].dest);
+              printf("Enter date: ");
+              scanf("%s",fl102[itr].date);
+              printf("Enter time: ");
+              scanf("%s",fl102[itr].t);
+ticketchoice1: printf("Enter ticket class: 1.Sleeper (Rs.1500) 2.Seater (Rs.1000): ");
+              scanf("%d",&tickch);
+              if(tickch==1)
+              {
+                 fl102[itr].ticketot=1650;
+                 fl102[itr].tax=1100;
+                 strcpy(fl102[itr].class,"Sleeper");
+              }
+              else if(tickch==2)
+              {
+                 fl102[itr].ticketot=1100;
+                 fl102[itr].tax=100;
+                 strcpy(fl102[itr].class,"Seater");
+              }
+              else
+              {
+                   printf("\nEnter a vaild option.\n");
+                   goto ticketchoice1;
+              }
+mealchoice1:   printf("\nDo you want a meal? 1.Veg Meal (Rs.100) 2.Non-Veg Meal(Rs.150) 3.Kids meal(Rs.50) 4.No meal\n");
+              scanf("%d",&mealch);
+              if(mealch==1)
+              {
+                 fl102[itr].ticketot+=100;
+                 strcpy(fl102[itr].meal,"Veg meal");
+              }
+              else if(mealch==2)
+              {
+                 fl102[itr].ticketot+=150;
+                 strcpy(fl102[itr].meal,"Non-Veg meal");
+              }
+              else if(mealch==3)
+              {
+                 fl102[itr].ticketot+=50;
+                 strcpy(fl102[itr].meal,"Kids meal");
+              }
+              else if(mealch==4)
+                 strcpy(fl102[itr].meal,"No meal");
+              else
+              {
+                   printf("\nEnter a vaild option.\n");
+                   goto mealchoice1;
+              }
+              fl102[itr].seatno = seatcnt;
+              fl102[itr].tickno = ticketno;
+              seatcnt++;
+              ticketno++;
+              printf("\nTicket  booked successfully\n");
+          }
+          printf("\nTax pricing will be charged automatically based on your ticket's class\n");
+          goto Bus2;
+          break;
+   case 2:printf("\n----------------BUS SUMMARY----------------\nEnter ticket number: ");
+          scanf("%d",&temptno1);
+          for(ctr=0;(temptno1!=fl102[ctr].tickno)&&(ctr<ticketno);ctr++);
+          printf("\n-------------TICKET DETAILS--------------\nBUS: BUS02\nPASSENGER NAME: %s\t\tTICKET NUMBER:%d\t\tTICKET CLASS:%s\t\t\n",fl102[ctr].passname,fl102[ctr].tickno,fl102[ctr].class);
+          printf("BUS FROM: %s\t\t\tDESTINATION: %s\t\tON %s\t\tAT %s\t\n",fl102[ctr].from,fl102[ctr].dest,fl102[ctr].date,fl102[ctr].t);
+          printf("MEAL SELECTED: %s\t\tTax Charges: %.2f\n",fl102[ctr].meal,fl102[ctr].tax);
+          printf("TOTAL TICKET COST: %.2f\nHave an amazing journey\n",fl102[ctr].ticketot);
+          goto Bus2;
+          break;
+   case 3:printf("\n----------------TICKET CANCELLATION-----------------\nEnter ticket number: ");
+          scanf("%d",&temptno1);
+          for(ctr=0;(temptno1!=fl102[ctr].tickno)&&(ctr<ticketno);ctr++);
+          printf("\nTicket cancelled successfully. Rs.%.2f refunded.\n", fl102[ctr].ticketot);
+          for(i=ctr;i<(ticketno-1);i++)
+              fl102[ctr]=fl102[ctr+1];
+          ticketno--;
+          goto Bus2;
+          break;
+   case 4:break;
+   default:printf("\nEnter a valid option");
+           goto Bus2;
+       }
+    }
+    else if(Busno==3)
+         return 0;
+    else
+         printf("\nEnter a valid option\n");
+    }
+}
+
+
